@@ -13,23 +13,25 @@ setInterval(function() {
             sensor['temperature'] = body;
             console.log('Temperature Updated');
         }
+        humi();
     });
 
     // Get the Humidity value
-    request('http://localhost:8094/cxf/humidity/devices/sensor/humidity', function (error, res, body) {
+    function humi(){request('http://localhost:8094/cxf/humidity/devices/sensor/humidity', function (error, res, body) {
         if (!error && res.statusCode == 200) {
             sensor['humidity'] = body;
             console.log('Humidity Updated');
         }
-    });
+        lamp();
+    });}
     
     // Get the Lamp status 
-    request('http://localhost:8094/cxf/lamp/devices/actuator/lamp', function (error, res, body) {
+    function lamp(){request('http://localhost:8094/cxf/lamp/devices/actuator/lamp', function (error, res, body) {
         if (!error && res.statusCode == 200) {
             sensor['lamp'] = body;
             console.log('Lamp Updated');
         }
-    });
+    });}
 }, 4000);
 
 http.createServer(function(req, res) {
